@@ -1,26 +1,54 @@
 .carouselWrap {
+  width: 80vw;
+  position: relative;
+  margin: 0 auto;
+  button {
+    cursor: pointer;
+    padding: 0;
+    &.carouselLeft,
+    &.carouselRight {
+      border: none;
+      background: none;
+    }
+  }
+}
+
+// .carouselContainer {
+  // display: inline-flex;
+  // flex-direction: row;
+  // flex-wrap: nowrap;
+  // justify-content: center;
+  // align-items: center;
+// }
+
+.carouselList {
   display: inline-flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  position: relative;
+  padding: 0;
+
+  .slideItem {
+    position: relative;
+    list-style: none;
+  }
+
+  .active-slide {
+    color: red;
+  }
+  .inactive-slide {
+    display: none;
+  }
 }
 
-.carouselList {
-  display: flex;
+nav.carouselNav {
+  display: inline-flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-}
+  padding: 0;
+  width: 100%;
 
-.slideItem {
-  position: relative;
-  list-style: none;
-}
-
-.active-slide {
-  color: red;
 }

@@ -2,6 +2,8 @@
 import './Carousel.scss';
 import React from 'react';
 import { useEffect, useRef } from 'react';
+
+
 const slides = [
   {
     slide: {
@@ -49,18 +51,22 @@ const SlideItem = ({ item, idx, currentSlide }) => {
     slide = item.slide,
     slideRef = useRef(null);
 
-  useEffect(() => {
+  const activeSlideLogic = () => {
     const
       domSlide = slideRef.current,
       slideIndex = (parseInt(domSlide.className.substr(4, 1)));
 
     if (slideIndex === currentSlide) {
-      // domSlide.style = "color:red";
+      domSlide.classList.remove("inactive-slide");
       domSlide.classList.add("active-slide");
     } else {
       domSlide.classList.remove("active-slide");
+      domSlide.classList.add("inactive-slide");
     }
-    // console.log(domSlide.className);
+  }
+
+  useEffect(() => {
+    activeSlideLogic();
   })
   return (
     <li ref={slideRef} className={`idx-${idx} slideItem`}>
@@ -70,8 +76,6 @@ const SlideItem = ({ item, idx, currentSlide }) => {
     </li>
   )
 }
-
-
 
 
 
@@ -92,6 +96,25 @@ const Carousel = () => {
           ))}
         </ul>
       </div>
+      <nav className="carouselNav">
+        <button className="carouselLeft">
+          <svg width="24" height="24" viewBox="0 0 24 24" transform="rotate(180)" >
+            <path d="M21 12l-18 12v-24z" />
+          </svg>
+        </button>
+        <div className="carouselDots">
+          {slides.map(() => (
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z" />
+            </svg>
+          ))}
+        </div>
+        <button className="carouselRight">
+          <svg width="24" height="24" viewBox="0 0 24 24" >
+            <path d="M21 12l-18 12v-24z" />
+          </svg>
+        </button>
+      </nav>
     </div>
   );
 }
