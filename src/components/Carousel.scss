@@ -40,10 +40,25 @@
     width: 100%;
     margin: 0;
     padding: 0;
+    article {
+      height: 100%;
+      width: 100%;
+      p.codepen {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid;
+        margin: 1em 0;
+        padding: 1em;
+      }
+    }
   }
 
   .active-slide {
-    color: red;
+    color: black;
   }
   .inactive-slide {
     display: none;

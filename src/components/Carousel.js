@@ -8,14 +8,14 @@ const slides = [
   {
     slide: {
       title: 'Slide One',
-      content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum`,
+      content: `LYywjeR`,
       summary: 'Details about slide one'
     },
   },
   {
     slide: {
       title: 'Slide Two',
-      content: '',
+      content: 'bGWJqxN',
       summary: 'Details about slide two'
     },
   },
@@ -49,7 +49,8 @@ const slides = [
 const SlideItem = ({ item, idx, currentSlide }) => {
   const
     slide = item.slide,
-    slideRef = useRef(null);
+    slideRef = useRef(null),
+    codepenLink = ("https://codepen.io/jason-warner/pen/").concat(slide.content);
 
   const activeSlideLogic = () => {
     const
@@ -64,20 +65,39 @@ const SlideItem = ({ item, idx, currentSlide }) => {
       domSlide.classList.add("inactive-slide");
     }
   }
+  const addScript = () => {
+    const script = document.createElement("script");
+
+    script.src = "https://cpwebassets.codepen.io/assets/embed/ei.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }
 
   useEffect(() => {
     activeSlideLogic();
+    addScript();
   })
   return (
     <li ref={slideRef} className={`idx-${idx} slideItem`}>
       <h2>{slide.title}</h2>
-      <article>{slide.content}</article>
+      <article>
+        <p className="codepen" data-height="350" data-theme-id="dark" data-slug-hash={slide.content} data-user="jason-warner">
+          <span>See the Pen <a href={codepenLink}>
+            React Shutter Effect</a> by Jason Warner (<a href="https://codepen.io/jason-warner">@jason-warner</a>)
+            on <a href="https://codepen.io">CodePen</a>.</span>
+        </p>
+        {/* {slide.content} */}
+      </article>
       <p>{slide.summary}</p>
     </li>
   )
 }
 
-
+// {/* <p className="codepen" data-height="300" data-default-tab="html,result" data-slug-hash="LYywjeR" data-user="jason-warner" style={{ height: '300px', boxSizing: 'borderBox', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid', margin: '1em 0', padding: '1em' }}>
+// <span>See the Pen <a href="https://codepen.io/jason-warner/pen/LYywjeR">
+//   React Shutter Effect</a> by Jason Warner (<a href="https://codepen.io/jason-warner">@jason-warner</a>)
+//   on <a href="https://codepen.io">CodePen</a>.</span>
+// </p> */}
 
 
 const Carousel = () => {
