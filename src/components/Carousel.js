@@ -1,7 +1,7 @@
 // inspiration: https://codepen.io/ryasan86/pen/QXwEbM
 import './Carousel.scss';
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 const slides = [
   {
     slide: {
@@ -44,11 +44,26 @@ const slides = [
 
 // slides.push(...slides);
 
-const SlideItem = ({ item, idx }) => {
-  const slide = item.slide;
-  console.log(idx);
+const SlideItem = ({ item, idx, currentSlide }) => {
+  const
+    slide = item.slide,
+    slideRef = useRef(null);
+
+  useEffect(() => {
+    const
+      domSlide = slideRef.current,
+      slideIndex = (parseInt(domSlide.className.substr(4, 1)));
+
+    if (slideIndex === currentSlide) {
+      // domSlide.style = "color:red";
+      domSlide.classList.add("active-slide");
+    } else {
+      domSlide.classList.remove("active-slide");
+    }
+    // console.log(domSlide.className);
+  })
   return (
-    <li className="slideItem">
+    <li ref={slideRef} className={`idx-${idx} slideItem`}>
       <h2>{slide.title}</h2>
       <article>{slide.content}</article>
       <p>{slide.summary}</p>
@@ -68,7 +83,12 @@ const Carousel = () => {
       <div className="carouselContainer">
         <ul className="carouselList">
           {slides.map((slide, index) => (
-            <SlideItem key={index} item={slide} idx={activeSlide} />
+            <SlideItem
+              key={index}
+              item={slide}
+              idx={index}
+              currentSlide={activeSlide}
+            />
           ))}
         </ul>
       </div>
