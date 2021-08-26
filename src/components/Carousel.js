@@ -1,7 +1,7 @@
 // inspiration: https://codepen.io/ryasan86/pen/QXwEbM
 import './Carousel.scss';
 import React from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 
 const slides = [
@@ -43,9 +43,6 @@ const slides = [
 ];
 
 
-
-// slides.push(...slides);
-
 const SlideItem = ({ item, idx, currentSlide }) => {
   const
     slide = item.slide,
@@ -67,7 +64,6 @@ const SlideItem = ({ item, idx, currentSlide }) => {
   }
   const addScript = () => {
     const script = document.createElement("script");
-
     script.src = "https://cpwebassets.codepen.io/assets/embed/ei.js";
     script.async = true;
     document.body.appendChild(script);
@@ -81,27 +77,26 @@ const SlideItem = ({ item, idx, currentSlide }) => {
     <li ref={slideRef} className={`idx-${idx} slideItem`}>
       <h2>{slide.title}</h2>
       <article>
-        <p className="codepen" data-height="350" data-theme-id="dark" data-slug-hash={slide.content} data-user="jason-warner">
+        <p className="codepen" data-height="350" data-theme-id="dark" data-slug-hash={slide.content} data-preview="true" data-user="jason-warner">
           <span>See the Pen <a href={codepenLink}>
             React Shutter Effect</a> by Jason Warner (<a href="https://codepen.io/jason-warner">@jason-warner</a>)
             on <a href="https://codepen.io">CodePen</a>.</span>
         </p>
-        {/* {slide.content} */}
       </article>
       <p>{slide.summary}</p>
     </li>
   )
 }
 
-// {/* <p className="codepen" data-height="300" data-default-tab="html,result" data-slug-hash="LYywjeR" data-user="jason-warner" style={{ height: '300px', boxSizing: 'borderBox', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid', margin: '1em 0', padding: '1em' }}>
-// <span>See the Pen <a href="https://codepen.io/jason-warner/pen/LYywjeR">
-//   React Shutter Effect</a> by Jason Warner (<a href="https://codepen.io/jason-warner">@jason-warner</a>)
-//   on <a href="https://codepen.io">CodePen</a>.</span>
-// </p> */}
-
-
 const Carousel = () => {
-  let activeSlide = 0;
+  const
+    [slideIndex, setSlideIndex] = useState(0),
+    increment = () => setSlideIndex(slideIndex + 1),
+    decrement = () => setSlideIndex(slideIndex - 1);
+  let activeSlide = slideIndex;
+  
+  console.log(activeSlide)
+
   return (
     <div className="carouselWrap">
       <div className="carouselContainer">
@@ -117,7 +112,7 @@ const Carousel = () => {
         </ul>
       </div>
       <nav className="carouselNav">
-        <button className="carouselLeft">
+        <button onClick={decrement} className="carouselLeft">
           <svg width="24" height="24" viewBox="0 0 24 24" transform="rotate(180)" >
             <path d="M21 12l-18 12v-24z" />
           </svg>
@@ -129,7 +124,7 @@ const Carousel = () => {
             </svg>
           ))}
         </div>
-        <button className="carouselRight">
+        <button onClick={increment} className="carouselRight">
           <svg width="24" height="24" viewBox="0 0 24 24" >
             <path d="M21 12l-18 12v-24z" />
           </svg>
