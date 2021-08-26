@@ -41,8 +41,8 @@ const slides = [
     }
   }
 ];
-
-
+const slideLen = slides.length;
+console.log(slideLen)
 const SlideItem = ({ item, idx, currentSlide }) => {
   const
     slide = item.slide,
@@ -89,12 +89,13 @@ const SlideItem = ({ item, idx, currentSlide }) => {
 }
 
 const Carousel = () => {
-  const
+  let
     [slideIndex, setSlideIndex] = useState(0),
-    increment = () => setSlideIndex(slideIndex + 1),
-    decrement = () => setSlideIndex(slideIndex - 1);
-  let activeSlide = slideIndex;
-  
+    activeSlide = slideIndex;
+  const
+    increment = () => slideIndex < slideLen && setSlideIndex(++slideIndex),
+    decrement = () => slideIndex > 0 && setSlideIndex(--slideIndex);
+
   console.log(activeSlide)
 
   return (
