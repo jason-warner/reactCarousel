@@ -41,8 +41,10 @@ const slides = [
     }
   }
 ];
-const slideLen = slides.length;
+const slideLen = (slides.length - 1); //acount for array compare
 console.log(slideLen)
+
+
 const SlideItem = ({ item, idx, currentSlide }) => {
   const
     slide = item.slide,
@@ -72,7 +74,8 @@ const SlideItem = ({ item, idx, currentSlide }) => {
   useEffect(() => {
     activeSlideLogic();
     addScript();
-  })
+  });
+  
   return (
     <li ref={slideRef} className={`idx-${idx} slideItem`}>
       <h2>{slide.title}</h2>
@@ -88,6 +91,7 @@ const SlideItem = ({ item, idx, currentSlide }) => {
   )
 }
 
+
 const Carousel = () => {
   let
     [slideIndex, setSlideIndex] = useState(0),
@@ -95,7 +99,9 @@ const Carousel = () => {
   const
     increment = () => slideIndex < slideLen && setSlideIndex(++slideIndex),
     decrement = () => slideIndex > 0 && setSlideIndex(--slideIndex);
-
+  const dotClick = (index) => {
+    alert(`dis da index: ${index}`)
+  }
   console.log(activeSlide)
 
   return (
@@ -119,10 +125,12 @@ const Carousel = () => {
           </svg>
         </button>
         <div className="carouselDots">
-          {slides.map(() => (
-            <svg width="24" height="24" viewBox="0 0 24 24">
-              <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z" />
-            </svg>
+          {slides.map((dot, index) => (
+            <button key={index} onClick={() => dotClick(index)}>
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z" />
+              </svg>
+            </button>
           ))}
         </div>
         <button onClick={increment} className="carouselRight">
