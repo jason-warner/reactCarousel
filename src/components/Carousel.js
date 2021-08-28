@@ -81,9 +81,9 @@ const SlideItem = ({ item, idx, activeSlide }) => {
       <h2>{slide.title}</h2>
       <article>
         <p className="codepen" data-height="350" data-theme-id="dark" data-slug-hash={slide.content} data-preview="true" data-user="jason-warner">
-          <span>See the Pen <a href={codepenLink}>
-            React Shutter Effect</a> by Jason Warner (<a href="https://codepen.io/jason-warner">@jason-warner</a>)
-            on <a href="https://codepen.io">CodePen</a>.</span>
+          <span>See this <a href={codepenLink}>
+            React Snippet</a> by <a href="https://codepen.io/jason-warner">Jason Warner</a> on <a href="https://codepen.io">CodePen</a>.
+          </span>
         </p>
       </article>
       <p>{slide.summary}</p>
