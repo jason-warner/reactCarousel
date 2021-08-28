@@ -45,7 +45,7 @@ const slideLen = (slides.length - 1); //acount for array compare
 console.log(slideLen)
 
 
-const SlideItem = ({ item, idx, currentSlide }) => {
+const SlideItem = ({ item, idx, activeSlide }) => {
   const
     slide = item.slide,
     slideRef = useRef(null),
@@ -55,8 +55,7 @@ const SlideItem = ({ item, idx, currentSlide }) => {
     const
       domSlide = slideRef.current,
       slideIndex = (parseInt(domSlide.className.substr(4, 1)));
-
-    if (slideIndex === currentSlide) {
+    if (slideIndex === activeSlide) {
       domSlide.classList.remove("inactive-slide");
       domSlide.classList.add("active-slide");
     } else {
@@ -64,6 +63,7 @@ const SlideItem = ({ item, idx, currentSlide }) => {
       domSlide.classList.add("inactive-slide");
     }
   }
+
   const addScript = () => {
     const script = document.createElement("script");
     script.src = "https://cpwebassets.codepen.io/assets/embed/ei.js";
@@ -93,13 +93,11 @@ const SlideItem = ({ item, idx, currentSlide }) => {
 
 
 const Carousel = () => {
-  let
-    [slideIndex, setSlideIndex] = useState(0),
-    activeSlide = slideIndex;
+  let [activeSlide, setActiveSlide] = useState(0);
   const
-    increment = () => slideIndex < slideLen && setSlideIndex(++slideIndex),
-    decrement = () => slideIndex > 0 && setSlideIndex(--slideIndex),
-    dotClick = (index) => setSlideIndex(index);
+    increment = () => activeSlide < slideLen && setActiveSlide(++activeSlide),
+    decrement = () => activeSlide > 0 && setActiveSlide(--activeSlide),
+    dotClick = (index) => setActiveSlide(index);
 
   return (
     <div className="carouselWrap">
@@ -110,7 +108,7 @@ const Carousel = () => {
               key={index}
               item={slide}
               idx={index}
-              currentSlide={activeSlide}
+              activeSlide={activeSlide}
             />
           ))}
         </ul>
@@ -122,9 +120,9 @@ const Carousel = () => {
           </svg>
         </button>
         <div className="carouselDots">
-          {slides.map((dot, index) => (
+          {slides.map((_, index) => (
             <button key={index} onClick={() => dotClick(index)}>
-              <svg width="24" height="24" viewBox="0 0 24 24">
+              <svg width="12" height="12" viewBox="0 0 24 24">
                 <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z" />
               </svg>
             </button>

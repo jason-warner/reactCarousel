@@ -5,11 +5,8 @@
   button {
     cursor: pointer;
     padding: 0;
-    &.carouselLeft,
-    &.carouselRight {
       border: none;
       background: none;
-    }
   }
 }
 
