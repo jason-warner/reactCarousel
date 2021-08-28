@@ -122,9 +122,14 @@ const Carousel = () => {
         <div className="carouselDots">
           {slides.map((_, index) => (
             <button key={index} onClick={() => dotClick(index)}>
-              <svg width="12" height="12" viewBox="0 0 24 24">
-                <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z" />
-              </svg>
+              { index !== activeSlide &&
+                <svg width="12" height="12" viewBox="0 0 24 24">
+                  <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z" />
+                </svg>}
+              { index === activeSlide &&
+                <svg width="12" height="12" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="12" />
+                </svg>}
             </button>
           ))}
         </div>
