@@ -75,7 +75,7 @@ const SlideItem = ({ item, idx, currentSlide }) => {
     activeSlideLogic();
     addScript();
   });
-  
+
   return (
     <li ref={slideRef} className={`idx-${idx} slideItem`}>
       <h2>{slide.title}</h2>
@@ -98,11 +98,8 @@ const Carousel = () => {
     activeSlide = slideIndex;
   const
     increment = () => slideIndex < slideLen && setSlideIndex(++slideIndex),
-    decrement = () => slideIndex > 0 && setSlideIndex(--slideIndex);
-  const dotClick = (index) => {
-    alert(`dis da index: ${index}`)
-  }
-  console.log(activeSlide)
+    decrement = () => slideIndex > 0 && setSlideIndex(--slideIndex),
+    dotClick = (index) => setSlideIndex(index);
 
   return (
     <div className="carouselWrap">
