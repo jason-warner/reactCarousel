@@ -1,7 +1,7 @@
 // inspiration: https://codepen.io/ryasan86/pen/QXwEbM
 import './Carousel.scss';
 import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, forwardRef } from 'react';
 
 
 const slides = [
@@ -45,25 +45,12 @@ const slideLen = (slides.length - 1); //acount for array compare
 console.log(slideLen)
 
 
-const SlideItem = ({ item, idx, currentSlide }) => {
+const SlideItem = forwardRef(({ item, idx }, ref) => {
   const
     slide = item.slide,
-    slideRef = useRef(null),
     codepenLink = ("https://codepen.io/jason-warner/pen/").concat(slide.content);
 
-  const activeSlideLogic = () => {
-    const
-      domSlide = slideRef.current,
-      slideIndex = (parseInt(domSlide.className.substr(4, 1)));
 
-    if (slideIndex === currentSlide) {
-      domSlide.classList.remove("inactive-slide");
-      domSlide.classList.add("active-slide");
-    } else {
-      domSlide.classList.remove("active-slide");
-      domSlide.classList.add("inactive-slide");
-    }
-  }
   const addScript = () => {
     const script = document.createElement("script");
     script.src = "https://cpwebassets.codepen.io/assets/embed/ei.js";
@@ -72,12 +59,11 @@ const SlideItem = ({ item, idx, currentSlide }) => {
   }
 
   useEffect(() => {
-    activeSlideLogic();
     addScript();
-  });
-  
+  }, []);
+
   return (
-    <li ref={slideRef} className={`idx-${idx} slideItem`}>
+    <li ref={ref} className={`idx-${idx} slideItem`}>
       <h2>{slide.title}</h2>
       <article>
         <p className="codepen" data-height="350" data-theme-id="dark" data-slug-hash={slide.content} data-preview="true" data-user="jason-warner">
@@ -89,31 +75,50 @@ const SlideItem = ({ item, idx, currentSlide }) => {
       <p>{slide.summary}</p>
     </li>
   )
-}
+});
 
 
 const Carousel = () => {
   let
-    [slideIndex, setSlideIndex] = useState(0),
-    activeSlide = slideIndex;
+    [activeSlide, setActiveSlide] = useState(0);
   const
-    increment = () => slideIndex < slideLen && setSlideIndex(++slideIndex),
-    decrement = () => slideIndex > 0 && setSlideIndex(--slideIndex);
+    increment = () => activeSlide < slideLen && setActiveSlide(++activeSlide),
+    decrement = () => activeSlide > 0 && setActiveSlide(--activeSlide);
+
   const dotClick = (index) => {
     alert(`dis da index: ${index}`)
   }
-  console.log(activeSlide)
 
+  const slideRef = useRef(null);
+  const activeSlideLogic = () => {
+    const
+      domSlide = slideRef.current,
+      slideIndex = (parseInt(domSlide.className.substr(4, 1)));
+
+    console.log("slide index: " + slideIndex);
+    console.log("active slide: " + activeSlide);
+
+    if (activeSlide === slideIndex) {
+      domSlide.classList.remove("inactive-slide");
+      domSlide.classList.add("active-slide");
+    } else {
+      domSlide.classList.remove("active-slide");
+      domSlide.classList.add("inactive-slide");
+    }
+  }
+  useEffect(() => {
+    activeSlideLogic();
+  }, []);
   return (
     <div className="carouselWrap">
       <div className="carouselContainer">
         <ul className="carouselList">
           {slides.map((slide, index) => (
             <SlideItem
+              ref={slideRef}
               key={index}
               item={slide}
               idx={index}
-              currentSlide={activeSlide}
             />
           ))}
         </ul>
